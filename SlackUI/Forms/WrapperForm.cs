@@ -45,6 +45,7 @@ namespace SlackUI {
                 RequestHandler = new BrowserRequestHandler()
             };
             chromium.RegisterJsObject("chromiumNotification", new Core.ChromiumNotification());
+            chromium.RegisterJsObject("Notification", new Core.GeneralNotification());
 
             // Subscribe to multiple chromium web browser events
             chromium.FrameLoadEnd += chromium_FrameLoadEnd;
@@ -72,10 +73,15 @@ namespace SlackUI {
             if(!e.Url.Contains(AboutBlankPage)) {
                 // Remove the browser load overlay from the form
                 this.InvokeOnUiThreadIfRequired(() => {
-                    if(browserPanel.Controls["browserLoadOverlay"].Visible) {
+                    //if(browserPanel.Controls["browserLoadOverlay"].Visible) {
                         browserPanel.Controls["browserLoadOverlay"].Visible = false;
-                        chromium.ExecuteScriptAsync(@"(function () {window.Notification = function (title, options) { window.chromiumNotification.showNotification(title, options.body, options.icon, options.tag); }; window.Notification.prototype = window.Notification; window.Notification.permission = 'granted'; window.Notification.requestPermission = function (callback) { window.Notification.permission = 'granted'; if(callback) { callback('granted'); } }})();");
-                    }
+                        chromium.ExecuteScriptAsync(@"(function () {
+                            window.Notification = function (title, options) { 
+                                window.chromiumNotification.showNotification(title, options.body, options.icon, options.tag); 
+                            }; 
+                            window.Notification.permission = 'granted'; 
+                        })();");
+                    //}
                 });
 
                 // Unsubscribe the frame load end event
