@@ -128,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ChromiumNotification.cs" />
+    <Compile Include="Core\GeneralNotification.cs" />
     <Compile Include="Extensions\ControlExtension.cs" />
     <Compile Include="Handlers\BrowserLifeSpanHandler.cs" />
     <Compile Include="Forms\BaseForm.cs" />

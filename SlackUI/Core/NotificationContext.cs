@@ -76,14 +76,10 @@ namespace SlackUI {
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
         /*
          * Displays the wrapper form to the user.
          */
-        private static void DisplayWrapperForm() {
+        internal static void DisplayWrapperForm() {
             // Focus the wrapper form or display it to the user
             if(Program.WrapperForm.Visible) {
                 // Restore normal window state if form is minimized
@@ -99,6 +95,7 @@ namespace SlackUI {
                     using(TeamPickerForm teamPickerForm = new TeamPickerForm()) {
                         if(teamPickerForm.ShowDialog() == DialogResult.OK) {
                             Program.Settings.Data.InitialTeamToLoad = teamPickerForm.SlackTeamDomain;
+                            Program.WrapperForm.redirect(Program.ActiveTeamAddress);
                             Program.WrapperForm.Show();
                         }
                     }
@@ -109,6 +106,10 @@ namespace SlackUI {
                 }
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         /*
          * Context menu open about form item click event handler.
