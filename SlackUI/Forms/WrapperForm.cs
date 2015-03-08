@@ -61,6 +61,17 @@ namespace SlackUI {
             previousWindowState = WindowState;
         }
 
+        public void redirect(String url)
+        {
+            browserPanel.Controls["browserLoadOverlay"].Visible = true;
+            chromium.NavStateChanged += chromium_NavStateChanged;
+            chromium.Load(url);
+        }
+
+        public string address()
+        {
+            return chromium.Address;
+        }
         #endregion
 
         #region Private Methods
@@ -73,19 +84,14 @@ namespace SlackUI {
             if(!e.Url.Contains(AboutBlankPage)) {
                 // Remove the browser load overlay from the form
                 this.InvokeOnUiThreadIfRequired(() => {
-                    //if(browserPanel.Controls["browserLoadOverlay"].Visible) {
-                        browserPanel.Controls["browserLoadOverlay"].Visible = false;
-                        chromium.ExecuteScriptAsync(@"(function () {
-                            window.Notification = function (title, options) { 
-                                window.chromiumNotification.showNotification(title, options.body, options.icon, options.tag); 
-                            }; 
-                            window.Notification.permission = 'granted'; 
-                        })();");
-                    //}
+                    browserPanel.Controls["browserLoadOverlay"].Visible = false;
+                    chromium.ExecuteScriptAsync(@"(function () {
+                        window.Notification = function (title, options) { 
+                            window.chromiumNotification.showNotification(title, options.body, options.icon, options.tag); 
+                        }; 
+                        window.Notification.permission = 'granted'; 
+                    })();");
                 });
-
-                // Unsubscribe the frame load end event
-                chromium.FrameLoadEnd -= chromium_FrameLoadEnd;
             }
         }
 

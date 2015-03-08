@@ -99,6 +99,7 @@ namespace SlackUI {
                     using(TeamPickerForm teamPickerForm = new TeamPickerForm()) {
                         if(teamPickerForm.ShowDialog() == DialogResult.OK) {
                             Program.Settings.Data.InitialTeamToLoad = teamPickerForm.SlackTeamDomain;
+                            Program.WrapperForm.redirect(Program.ActiveTeamAddress);
                             Program.WrapperForm.Show();
                         }
                     }
