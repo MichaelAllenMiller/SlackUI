@@ -27,49 +27,10 @@ namespace SlackUI.Core {
                         }
 
                         if (target != "" && !Program.WrapperForm.address().Contains(target)) { Program.WrapperForm.redirect(target); }
-                        DisplayWrapperForm();
+                        NotificationContext.DisplayWrapperForm();
                     }
                 };
             });
         }
-
-        #region Private Methods
-        private static void DisplayWrapperForm()
-        {
-            // Focus the wrapper form or display it to the user
-            if (Program.WrapperForm.Visible)
-            {
-                // Restore normal window state if form is minimized
-                if (Program.WrapperForm.WindowState == FormWindowState.Minimized)
-                {
-                    Program.WrapperForm.WindowState = FormWindowState.Normal;
-                }
-
-                // Activates the wrapper form and gives it focus
-                Program.WrapperForm.Activate();
-            }
-            else
-            {
-                // Prompt for initial team domain to load or shows the wrapper form
-                if (Program.Settings.Data.InitialTeamToLoad.Equals(String.Empty))
-                {
-                    using (TeamPickerForm teamPickerForm = new TeamPickerForm())
-                    {
-                        if (teamPickerForm.ShowDialog() == DialogResult.OK)
-                        {
-                            Program.Settings.Data.InitialTeamToLoad = teamPickerForm.SlackTeamDomain;
-                            Program.WrapperForm.Show();
-                        }
-                    }
-                }
-                else
-                {
-                    // Displays the wrapper form to the user and gives it focus
-                    Program.WrapperForm.Show();
-                    Program.WrapperForm.Activate();
-                }
-            }
-        }
     }
-    #endregion
 }

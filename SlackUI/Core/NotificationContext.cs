@@ -76,14 +76,10 @@ namespace SlackUI {
             }
         }
 
-        #endregion
-
-        #region Private Methods
-
         /*
          * Displays the wrapper form to the user.
          */
-        private static void DisplayWrapperForm() {
+        internal static void DisplayWrapperForm() {
             // Focus the wrapper form or display it to the user
             if(Program.WrapperForm.Visible) {
                 // Restore normal window state if form is minimized
@@ -110,6 +106,10 @@ namespace SlackUI {
                 }
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         /*
          * Context menu open about form item click event handler.

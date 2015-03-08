@@ -60,18 +60,6 @@ namespace SlackUI {
             // Save the current window state as the previous one
             previousWindowState = WindowState;
         }
-
-        public void redirect(String url)
-        {
-            browserPanel.Controls["browserLoadOverlay"].Visible = true;
-            chromium.NavStateChanged += chromium_NavStateChanged;
-            chromium.Load(url);
-        }
-
-        public string address()
-        {
-            return chromium.Address;
-        }
         #endregion
 
         #region Private Methods
@@ -222,6 +210,22 @@ namespace SlackUI {
 
         #endregion
 
+
+        #region Internal Methods
+
+        public void redirect(String url)
+        {
+            browserPanel.Controls["browserLoadOverlay"].Visible = true;
+            chromium.NavStateChanged += chromium_NavStateChanged;
+            chromium.Load(url);
+        }
+
+        public string address()
+        {
+            return chromium.Address;
+        }
+
+        #endregion
     }
 
 }
